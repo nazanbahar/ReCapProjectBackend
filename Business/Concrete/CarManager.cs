@@ -2,6 +2,7 @@
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,42 +23,42 @@ namespace Business.Concrete
 
         public void Add(Car car)
         {
-            if ((car.Description).Length >= 2 && car.DailyPrice > 0)
+            if (car.DailyPrice > 0 && car.Description.Length >= 2)
             {
                 _carDal.Add(car);
+                Console.WriteLine("Araba eklendi.");
             }
             else
             {
-                Console.WriteLine("araba ismi minimum 2 karakter olmalıdır ve araba günlük fiyatı 0'dan büyük olmalıdır.");
+                Console.WriteLine("girilen değer 0 dan büyük olmalı! veya min karakter 2 olmalı!");
             }
+
 
         }
 
-        //ürün listesi
+        public void Delete(Car car)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Car> GetAll()
         {
             return _carDal.GetAll();
         }
 
-        public List<Car> GetByDailyPrice(decimal min, decimal max)
+        public Car GetById(int carId)
         {
-            return _carDal.GetAll(c => c.DailyPrice >= min && c.DailyPrice <= max);
+            return _carDal.Get(c=> c.CarId==carId);
         }
 
-        //id ye göre
-        public List<Car> GetById()
+        public List<CarDetailDto> GetCarDetails()
         {
-            return _carDal.GetAll();
+            return _carDal.GetCarDetails();
         }
 
-        public List<Car> GetCarsByBrandId(int id)
+        public void Update(Car car)
         {
-            return _carDal.GetAll(c => c.BrandId == id);
-        }
-
-        public List<Car> GetCarsByColorId(int id)
-        {
-            return _carDal.GetAll(c => c.ColorId == id);
+            throw new NotImplementedException();
         }
     }
 }

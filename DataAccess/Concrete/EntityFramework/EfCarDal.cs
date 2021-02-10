@@ -1,5 +1,7 @@
-﻿using DataAccess.Abstract;
+﻿using Core.DataAccess.EntityFramework;
+using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,58 +11,29 @@ using System.Text;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfCarDal : ICarDal
+    public class EfCarDal : EfEntityRepositoryBase<Car, NorthwindContext>, ICarDal
     {
-        public void Add(Car entity)
-        {
-            //using
-            using (NorthwindContext context = new NorthwindContext())
-            {
-                var addedEntity = context.Entry(entity);   //referansı yakala
-                addedEntity.State = EntityState.Added; //eklenecek nesne
-                context.SaveChanges(); //ekle
-
-            }
-        }
-
-        public void Delete(Car entity)
+        public List<CarDetailDto> GetCarDetails()
         {
             using (NorthwindContext context = new NorthwindContext())
             {
-                var deletedEntity = context.Entry(entity);
-                deletedEntity.State = EntityState.Deleted;
-                context.SaveChanges();
-            }
-        }
+                var result = from ca in context.Cars
+                             join co in context.Colors
+                             on ca.ColorId equals co.ColorId
+                             join br in context.Brands
+                             on ca.BrandId equals br.BrandId
+                             select new CarDetailDto
+                             {
+                                 CarId = ca.CarId,
+                                 CarName = ca.CarName,
+                                 BrandName = br.BrandName,
+                                 ColorName = co.ColorName,
+                                 DailyPrice = ca.DailyPrice,
+                             };
 
-        public Car Get(Expression<Func<Car, bool>> filter)
-        {
-            using (NorthwindContext context = new NorthwindContext())
-            {
-                //SingleOrDefault
-                return context.Set<Car>().SingleOrDefault(filter);
+                return result.ToList();
             }
-        }
-
-        public List<Car> GetAll(Expression<Func<Car, bool>> filter = null)
-        {
-            using (NorthwindContext context = new NorthwindContext())
-            {
-                //ternay - where
-                return filter==null
-                    ? context.Set<Car>().ToList()
-                    : context.Set<Car>().Where(filter).ToList();
-            }
-        }
-
-        public void Update(Car entity)
-        {
-            using (NorthwindContext context = new NorthwindContext())
-            {
-                var updatedEntity = context.Entry(entity);
-                updatedEntity.State = EntityState.Modified;
-                context.SaveChanges();
-            }
-        }
+        }  
     }
 }
+

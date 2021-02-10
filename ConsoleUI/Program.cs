@@ -10,44 +10,27 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
             //technology
+            CarTest();
+            CarDetailDto();
+
+        }
+
+        private static void CarDetailDto()
+        {
             CarManager carManager = new CarManager(new EfCarDal());
-
-            Console.WriteLine("getall****************");
-            foreach (var car in carManager.GetAll())
+            foreach (var car in carManager.GetCarDetails())
             {
-                Console.WriteLine (car.CarId + "" + car.BrandId, "" + car.ColorId, "" + "" + car.ModelYear, +car.DailyPrice, "" + car.CarName + "" + car.Description);
+                Console.WriteLine(car.CarName + "/" + car.BrandName + "/" + car.ColorName + "/" +car.DailyPrice);
             }
+        }
 
-            Console.WriteLine("carid list*********");
-            foreach (var car in carManager.GetById())
+        private static void CarTest()
+        {
+            CarManager carManager = new CarManager(new EfCarDal());
+            foreach (var car in carManager.GetCarDetails())
             {
-                Console.WriteLine(car.CarId);
+                Console.WriteLine(car.CarName + "/" + car.ColorName + "/" + car.BrandName);
             }
-                
- 
-            Console.WriteLine("GetByDailyPrice'a göre******");
-            foreach (var car in carManager.GetByDailyPrice(100, 500))
-            {
-                Console.WriteLine(car.CarName, car.DailyPrice);
-
-            }
-
-            Console.WriteLine("GetCarsByColorId'ye göre******");
-            foreach (var car in carManager.GetCarsByColorId(1))
-            {
-                Console.WriteLine(car.CarName, car.Description);
-
-            }
-
-            Console.WriteLine("GetCarsByBrandId'ye göre******");
-            foreach (var car in carManager.GetCarsByBrandId(5))
-            {
-                Console.WriteLine(car.CarName, car.Description);
-
-            }
-
-
-
         }
     }
 }
