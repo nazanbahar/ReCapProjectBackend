@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
+/// <summary>
+/// CarName, BrandName, ColorName, DailyPrice
+/// </summary>
 namespace Entities.DTOs
 {
     public class CarDetailDto : IDto
@@ -14,4 +16,3 @@ namespace Entities.DTOs
         public decimal DailyPrice { get; set; }
     }
 }
-//CarName, BrandName, ColorName, DailyPrice

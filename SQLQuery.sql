@@ -49,15 +49,59 @@ VALUES
 	('3','3','2018','150','Volvo','Benzinli Araç'),
 	('4','4','2017','100','Volkswagen','Dizel Araç'),
 	('5','5','2016','50','Renault','Otomatik Vites');
+
+***********************************************************************************************
+--LESSON-10
+--Users-->Id,FirstName,LastName,Email,Password
+CREATE TABLE Users
+(
+	UserId int primary key identity (1,1),
+	FirstName nvarchar (30) not null unique,
+	LastName nvarchar (30) not null unique,
+	Email nvarchar(60),
+	Password char (8) not null,
+	
+)
+go
+
+
+--Customers-->UserId,CompanyName
+CREATE TABLE Customers
+(
+	CustomerId int primary key identity (1,1),
+	UserId int foreign key references Users(UserId),
+	CompanyName nvarchar (30) not null unique,
+	
+)
+go
+
+--Rentals-->Id, CarId, CustomerId, RentDate(Kiralama Tarihi), ReturnDate(Teslim Tarihi)
+CREATE TABLE Rentals
+(
+	RentalId int primary key identity (1,1),
+	CarId int foreign key references Cars(CarId),
+	CustomerId int foreign key references Customers(CustomerId),
+	RentDate datetime default getdate(),
+	ReturnDate datetime default getdate(),
+	
+)
+go
+
+--Customers-->UserId,CompanyName
+INSERT INTO Customers(CompanyName)
+VALUES
+	('Teknosa'),
+	('LCW'),
+	('Arçelik'),
+	('Akbank'),
+	('YapıKredi Bankası');
+
+*********************************************************************************
 */
 
 use RentCarDb
 go
 
+--Users-->Id,FirstName,LastName,Email,Password
 
-
-
-
-
-
-
+--Rentals-->Id, CarId, CustomerId, RentDate(Kiralama Tarihi), ReturnDate(Teslim Tarihi)
