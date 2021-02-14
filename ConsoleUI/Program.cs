@@ -10,16 +10,15 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
             //technology
-            //BrandTest();
             //CarDetailDto();
-            //CarTest();
-            RentalTest();
-            CustomerTest();
-
+            CarTest();
+            //RentalTest();
+            
 
         }
 
 
+ 
 
         private static void RentalTest()
         {
@@ -33,8 +32,8 @@ namespace ConsoleUI
 
                 foreach (var rental in result.Data)
                 {
-                    Console.WriteLine(rental.CarName + "/" +rental.CompanyName + "/" + "/"+rental.FirtName + "/"+ rental.LastName+
-                        rental.RentDate + "/" + rental.ReturnDate +"/" + rental.ModelYear + "/" + rental.Email);
+                    Console.WriteLine(rental.CarName + "/" +rental.CompanyName + "/" + 
+                        rental.RentDate + "/" + rental.ReturnDate +"/" + rental.ModelYear);
                 }
             }
             else
@@ -44,30 +43,8 @@ namespace ConsoleUI
 
         }
 
-
-
-        private static void CustomerTest()
-        {
-            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
-
-
-            var result = customerManager.GetCustomerDetails();
-
-            if (result.Success == true)
-            {
-
-                foreach (var customer in result.Data)
-                {
-                    Console.WriteLine(customer);
-                }
-            }
-            else
-            {
-                Console.WriteLine(result.Message);
-            }
-
-        }
-
+   
+ 
 
         private static void CarTest()
 {
@@ -100,20 +77,6 @@ private static void CarDetailDto()
         Console.WriteLine(car.CarName + "/" + car.BrandName + "/" + car.ColorName + "/" + car.DailyPrice);
     }
 }
-
-
-private static void BrandTest()
-{
-    BrandManager brandManager = new BrandManager(new EfBrandDal());
-    foreach (var brand in brandManager.GetAll())
-    {
-        Console.WriteLine(brand.BrandName);
-    }
-}
-
-
-
-
 
 
     }

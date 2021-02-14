@@ -53,13 +53,17 @@ VALUES
 ***********************************************************************************************
 --LESSON-10
 --Users-->Id,FirstName,LastName,Email,Password
+--Users-->Id,FirstName,LastName,Email,Password
+
+--Rentals-->Id, CarId, CustomerId, RentDate(Kiralama Tarihi), ReturnDate(Teslim Tarihi)
+
 CREATE TABLE Users
 (
 	UserId int primary key identity (1,1),
-	FirstName nvarchar (30) not null unique,
-	LastName nvarchar (30) not null unique,
+	FirstName nvarchar (30),
+	LastName nvarchar (30),
 	Email nvarchar(60),
-	Password char (8) not null,
+	Password char (8),
 	
 )
 go
@@ -70,7 +74,7 @@ CREATE TABLE Customers
 (
 	CustomerId int primary key identity (1,1),
 	UserId int foreign key references Users(UserId),
-	CompanyName nvarchar (30) not null unique,
+	CompanyName nvarchar (30),
 	
 )
 go
@@ -81,8 +85,8 @@ CREATE TABLE Rentals
 	RentalId int primary key identity (1,1),
 	CarId int foreign key references Cars(CarId),
 	CustomerId int foreign key references Customers(CustomerId),
-	RentDate datetime default getdate(),
-	ReturnDate datetime default getdate(),
+	RentDate datetime,
+	ReturnDate datetime,
 	
 )
 go
@@ -105,3 +109,37 @@ go
 --Users-->Id,FirstName,LastName,Email,Password
 
 --Rentals-->Id, CarId, CustomerId, RentDate(Kiralama Tarihi), ReturnDate(Teslim Tarihi)
+
+CREATE TABLE Users
+(
+	UserId int primary key identity (1,1),
+	FirstName nvarchar (30),
+	LastName nvarchar (30),
+	Email nvarchar(60),
+	Password char (8),
+	
+)
+go
+
+
+--Customers-->UserId,CompanyName
+CREATE TABLE Customers
+(
+	CustomerId int primary key identity (1,1),
+	UserId int foreign key references Users(UserId),
+	CompanyName nvarchar (30),
+	
+)
+go
+
+--Rentals-->Id, CarId, CustomerId, RentDate(Kiralama Tarihi), ReturnDate(Teslim Tarihi)
+CREATE TABLE Rentals
+(
+	RentalId int primary key identity (1,1),
+	CarId int foreign key references Cars(CarId),
+	CustomerId int foreign key references Customers(CustomerId),
+	RentDate datetime,
+	ReturnDate datetime,
+	
+)
+go

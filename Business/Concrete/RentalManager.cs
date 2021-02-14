@@ -10,9 +10,9 @@ using System.Text;
 
 namespace Business.Concrete
 {
+
     public class RentalManager : IRentalService
     {
-
 
         IRentalDal _rentalDal;
 
@@ -24,7 +24,7 @@ namespace Business.Concrete
 
         public IResult Add(Rental rental)
         {
-            if (rental.ReturnDate==null)
+            if (rental.ReturnDate == null)
             {
                 //magic strings
                 return new ErrorResult(Messages.RentedCar);
@@ -33,21 +33,24 @@ namespace Business.Concrete
             return new SuccessResult(Messages.RentalCar);
         }
 
+
+
         public IResult Delete(Rental rental)
         {
             return new SuccessResult(Messages.RentalDeleted);
         }
-         
+
+
         public IDataResult<List<Rental>> GetAll()
         {
             if (DateTime.Now.Hour == 15)
             {
                 return new ErrorDataResult<List<Rental>>(Messages.MaintenanceTime);
-
             }
-
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(), Messages.RentalsListed);
         }
+
+
 
         public IDataResult<Rental> GetById(int rentalId)
         {
@@ -63,9 +66,11 @@ namespace Business.Concrete
             return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails());
         }
 
+
         public IResult Update(Rental rental)
         {
             return new SuccessResult(Messages.RentalUpdated);
+
         }
     }
 }
