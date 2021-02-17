@@ -9,8 +9,11 @@ using System.Text;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfUserDal 
+    public class EfUserDal : EfEntityRepositoryBase<User, ReCapProjectContext>, IUserDal
     {
-
+        public List<UserDetailDto> GetUserDetails(Expression<Func<User, bool>> filter = null)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,13 +1,16 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Business.Concrete
 {
-    class ColorManager : IColorService
+    public class ColorManager : IColorService
     {
         //veritabanın soyut sınıfına erişeceğiz.
         IColorDal _colorDal;
@@ -17,14 +20,49 @@ namespace Business.Concrete
             _colorDal = colorDal;
         }
 
-        public List<Color> GetAll()
+        public IResult Add(Color color)
         {
-            return _colorDal.GetAll();
+            if (color.ColorName.Length < 2)
+            {
+                return new ErrorResult(Messages.ColorNameInvalid);
+            }
+            _colorDal.Add(color);
+            return new SuccessResult(Messages.ColorAdded);
         }
 
-        public Color GetById(int colorId)
+        public IResult Delete(Color color)
         {
-            return _colorDal.Get(c => c.ColorId == colorId);
+            return new SuccessResult(Messages.ColorDeleted);
+        }
+
+        public IDataResult<List<Color>> GetAll()
+        {
+            if (DateTime.Now.Hour == 15)
+            {
+                return new ErrorDataResult<List<Color>>(Messages.MaintenanceTime);
+
+            }
+            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(), Messages.ColorsListed);
+        }
+
+
+        public IDataResult<Color> GetById(int colorId)
+        {
+            return new SuccessDataResult<Color>(_colorDal.Get(co => co.ColorId == colorId));
+        }
+
+        public IDataResult<List<ColorDetailDto>> GetColorDetails()
+        {
+            if (DateTime.Now.Hour == 15)
+            {
+                return new ErrorDataResult<List<ColorDetailDto>>(Messages.MaintenanceTime);
+            }
+            return new SuccessDataResult<List<ColorDetailDto>>(_colorDal.GetColorDetails());
+        }
+
+        public IResult Update(Color color)
+        {
+            return new SuccessResult(Messages.ColorUpdated);
         }
     }
 }
