@@ -13,11 +13,9 @@ namespace ConsoleUI
             //CarDetailDto();
             CarTest();
             //RentalTest();
+            //switch-case yapısı ekle.-araba ekleme
             
-
         }
-
-
  
 
         private static void RentalTest()

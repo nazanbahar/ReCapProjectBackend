@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Core.Utilities.Results;
+using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
 using System;
@@ -10,34 +12,57 @@ namespace Business.Concrete
 {
     public class UserManager : IUserService
     {
+        IUserDal _userDal;
+
+        public UserManager(IUserDal userDal)
+        {
+            _userDal = userDal;
+        }
+
+
+
         public IResult Add(User user)
         {
-            throw new NotImplementedException();
+            if (user.FirstName.Length < 2)
+            {
+                return new ErrorResult(Messages.UserNameInvalid);
+            }
+            _userDal.Add(user);
+            return new SuccessResult(Messages.UserAdded);
         }
 
         public IResult Delete(User user)
         {
-            throw new NotImplementedException();
+            return new SuccessResult(Messages.UserDeleted);
         }
 
         public IDataResult<List<User>> GetAll()
         {
-            throw new NotImplementedException();
+            if (DateTime.Now.Hour == 22)
+            {
+                return new ErrorDataResult<List<User>>(Messages.MaintenanceTime);
+
+            }
+            return new SuccessDataResult<List<User>>(_userDal.GetAll(), Messages.UsersListed);
         }
 
         public IDataResult<User> GetById(int userId)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<User>(_userDal.Get(u => u.UserId == userId));
         }
 
         public IDataResult<List<UserDetailDto>> GetUserDetails()
         {
-            throw new NotImplementedException();
+            if (DateTime.Now.Hour == 22)
+            {
+                return new ErrorDataResult<List<UserDetailDto>>(Messages.MaintenanceTime);
+            }
+            return new SuccessDataResult<List<UserDetailDto>>(_userDal.GetUserDetails());
         }
 
         public IResult Update(User user)
         {
-            throw new NotImplementedException();
+            return new SuccessResult(Messages.UserUpdated);
         }
     }
 }

@@ -40,5 +40,11 @@ namespace Business.Constants
         internal static string BrandDeleted = "Marka silindi";
         internal static string BrandUpdated = "Marka bilgisi güncellendi";
 
+        public static string UserAdded = "User eklendi";
+        public static string UserNameInvalid = "User name geçersiz";
+        internal static string UsersListed = "Kullanıcılar listelendi";
+        internal static string UserDeleted = "User kaydı silindi";
+        internal static string UserUpdated = "User bilgisi güncellendi";
+
     }
 }

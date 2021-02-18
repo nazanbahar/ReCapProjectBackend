@@ -40,9 +40,9 @@ namespace WebAPI.Controllers
 
 
         [HttpGet("getbyid")]
-        public IActionResult GetById(int id)
+        public IActionResult GetById(int rental)
         {
-            var result = _rentalService.GetById(id);
+            var result = _rentalService.GetById(rental);
             if (result.Success)
             {
                 return Ok(result);

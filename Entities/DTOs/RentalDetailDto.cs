@@ -8,7 +8,7 @@ using System.Text;
 /// </summary>
 namespace Entities.DTOs
 {
-    public class RentalDetailDto:IDto
+    public class RentalDetailDto : IDto
     {
         public int RentalId { get; set; }
         public string CarName { get; set; }
@@ -17,7 +17,7 @@ namespace Entities.DTOs
         public decimal DailyPrice { get; set; }
         public string CompanyName { get; set; }
         public DateTime RentDate { get; set; }
-        public DateTime ReturnDate { get; set; }
+        public DateTime? ReturnDate { get; set; }
 
     }
 }
