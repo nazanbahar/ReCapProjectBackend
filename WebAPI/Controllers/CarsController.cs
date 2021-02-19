@@ -107,7 +107,7 @@ namespace WebAPI.Controllers
 
 
         //Update(Car car)
-        [HttpPut("update")]
+        [HttpPost("update")]
         public IActionResult Update(Car car)
         {
             var result = _carService.Update(car);
@@ -120,7 +120,7 @@ namespace WebAPI.Controllers
 
 
         //Delete(Car car)
-        [HttpDelete("delete")]
+        [HttpPost("delete")]
         public IActionResult Delete(Car car)
         {
             var result = _carService.Delete(car);

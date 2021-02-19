@@ -20,7 +20,6 @@ namespace Business.Concrete
         }
 
 
-
         public IResult Add(User user)
         {
             if (user.FirstName.Length < 2)
@@ -33,6 +32,7 @@ namespace Business.Concrete
 
         public IResult Delete(User user)
         {
+            _userDal.Delete(user);
             return new SuccessResult(Messages.UserDeleted);
         }
 
@@ -62,6 +62,7 @@ namespace Business.Concrete
 
         public IResult Update(User user)
         {
+            _userDal.Update(user);
             return new SuccessResult(Messages.UserUpdated);
         }
     }

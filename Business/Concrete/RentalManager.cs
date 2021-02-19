@@ -24,7 +24,10 @@ namespace Business.Concrete
 
         public IResult Add(Rental rental)
         {
-            if (rental.ReturnDate == null)
+            //ReturnDate Control
+            var result = _rentalDal.Get(c => c.CarId == rental.CarId &&
+                        (c.ReturnDate == null || c.ReturnDate > DateTime.Now));
+            if (result != null)
             {
                 //magic strings
                 return new ErrorResult(Messages.RentedCar);
@@ -37,6 +40,7 @@ namespace Business.Concrete
 
         public IResult Delete(Rental rental)
         {
+            _rentalDal.Delete(rental);
             return new SuccessResult(Messages.RentalDeleted);
         }
 
@@ -69,6 +73,7 @@ namespace Business.Concrete
 
         public IResult Update(Rental rental)
         {
+            _rentalDal.Update(rental);
             return new SuccessResult(Messages.RentalUpdated);
 
         }
