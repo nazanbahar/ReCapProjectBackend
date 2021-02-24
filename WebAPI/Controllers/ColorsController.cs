@@ -52,16 +52,16 @@ namespace WebAPI.Controllers
         }
 
 
-        [HttpGet("getcolordetails")]
-        public IActionResult GetColorDetails()
-        {
-            var result = _colorService.GetColorDetails();
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
+        //[HttpGet("getcolordetails")]
+        //public IActionResult GetColorDetails()
+        //{
+        //    var result = _colorService.GetColorDetails();
+        //    if (result.Success)
+        //    {
+        //        return Ok(result);
+        //    }
+        //    return BadRequest(result);
+        //}
 
 
         [HttpPost("add")]

@@ -13,9 +13,6 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfColorDal : EfEntityRepositoryBase<Color, ReCapProjectContext>, IColorDal
     {
-        public List<ColorDetailDto> GetColorDetails()
-        {
-            throw new NotImplementedException();
-        }
+  
     }
 }

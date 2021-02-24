@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -21,6 +23,7 @@ namespace Business.Concrete
         }
 
 
+        [ValidationAspect(typeof(CustomerValidator))]
         public IResult Add(Customer customer)
         {
             if (customer.CompanyName.Length < 2)
@@ -56,15 +59,16 @@ namespace Business.Concrete
             return new SuccessDataResult<Customer>(_customerDal.Get(cu => cu.CustomerId == customerId));
         }
 
-        public IDataResult<List<CustomerDetailDto>> GetCustomerDetails()
-        {
-            if (DateTime.Now.Hour == 15)
-            {
-                return new ErrorDataResult<List<CustomerDetailDto>>(Messages.MaintenanceTime);
-            }
-            return new SuccessDataResult<List<CustomerDetailDto>>(_customerDal.GetCustomerDetails());
-        }
+        //public IDataResult<List<CustomerDetailDto>> GetCustomerDetails()
+        //{
+        //    if (DateTime.Now.Hour == 15)
+        //    {
+        //        return new ErrorDataResult<List<CustomerDetailDto>>(Messages.MaintenanceTime);
+        //    }
+        //    return new SuccessDataResult<List<CustomerDetailDto>>(_customerDal.GetCustomerDetails());
+        //}
 
+        [ValidationAspect(typeof(CustomerValidator))]
         public IResult Update(Customer customer)
         {
             _customerDal.Update(customer);

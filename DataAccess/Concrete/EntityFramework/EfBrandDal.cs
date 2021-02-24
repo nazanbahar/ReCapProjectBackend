@@ -13,9 +13,6 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfBrandDal : EfEntityRepositoryBase<Brand, ReCapProjectContext>, IBrandDal
     {
-        public List<BrandDetailDto> GetBrandDetails()
-        {
-            throw new NotImplementedException();
-        }
+     
     }
 }
