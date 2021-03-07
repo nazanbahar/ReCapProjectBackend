@@ -18,6 +18,10 @@ namespace Business.DependencyResolvers.Autofac
 
         protected override void Load(ContainerBuilder builder)
         {
+            //performans sebebiyle microsoft IoC Container'i tercih etmiyoruz. Biz AutofacBusinessModule kullanacağız...
+            //syntax: builder.RegisterType<>().As<>().SingleInstance();
+            //SingleInstance(); --üretilen tek bir instance birden fazla kullanılabilir. 
+            //WebAPI Katmanında her API için ayrı ayrı üretmek ve performans sorunu nedeniyle tercih etmedik...  
             //car
             builder.RegisterType<CarManager>().As<ICarService>().SingleInstance();
             builder.RegisterType<EfCarDal>().As<ICarDal>().SingleInstance();

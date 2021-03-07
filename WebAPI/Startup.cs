@@ -1,5 +1,8 @@
 using Business.Abstract;
 using Business.Concrete;
+using Core.DependencyResolvers;
+using Core.Extensions;
+using Core.Utilities.IoC;
 using Core.Utilities.Security.Encryption;
 using Core.Utilities.Security.JWT;
 using DataAccess.Abstract;
@@ -19,6 +22,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+/// <summary>
+///AOP
+///Autofac, Ninject, CastleWindsor, StructtureMap, LightInject, DryInject--> IoC Container
+///microsoft IoC Container bunu tercih etmiyoruz! Performans sorunu nedeniyle... 
+///services.AddSingleton<*>(); syntax ile tanýmlanýr...
+///services.AddSingleton<ICarService, CarManager>();
+///services.AddSingleton<ICarDal, EfCarDal>();
+///services.AddControllers();
+
+/// </summary>
 namespace WebAPI
 {
     public class Startup
@@ -52,29 +65,18 @@ namespace WebAPI
                         IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
                     };
                 }); // response headerlara neleri koyacaðýmýzý yazacaðýz.
+                    //deleted: ServiceTool.Create(services);
 
-            //AOP
-            //Autofac, Ninject, CastleWindsor, StructtureMap, LightInject, DryInject--> IoC Container
-            services.AddControllers();
-            services.AddSingleton<ICarService, CarManager>();
-            services.AddSingleton<ICarDal, EfCarDal>();
 
-            services.AddSingleton<ICustomerService, CustomerManager>();
-            services.AddSingleton<ICustomerDal, EfCustomerDal>();
+            services.AddDependencyResolvers(new ICoreModule[]
+            {
+                new CoreModule()
 
-            services.AddSingleton<IUserService, UserManager>();
-            services.AddSingleton<IUserDal, EfUserDal>();
-
-            services.AddSingleton<IRentalService, RentalManager>();
-            services.AddSingleton<IRentalDal, EfRentalDal>();
-
-            services.AddSingleton<IBrandService, BrandManager>();
-            services.AddSingleton<IBrandDal, EfBrandDal>();
-
-            services.AddSingleton<IColorService, ColorManager>();
-            services.AddSingleton<IColorDal, EfColorDal>();
+            });
 
         }
+
+           
 
         // this method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         //Middleware in ASP NET Core- yaþam döngüsü
@@ -89,8 +91,10 @@ namespace WebAPI
 
             app.UseRouting();
 
+            //Token Almak için- kullaným yetkilendirmesi kulllan...
             app.UseAuthorization();
-            //finally
+
+            //finally- authentication token almak için- kimlik doðrulamasý kullan...
             app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
@@ -100,3 +104,4 @@ namespace WebAPI
         }
     }
 }
+

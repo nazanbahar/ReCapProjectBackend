@@ -19,6 +19,9 @@ namespace WebAPI
             CreateHostBuilder(args).Build().Run();
         }
 
+        
+        //AutofacBusinessModule()--> Business katmanýnda Autofac servisi kullanacaðýmýzý bildirmek
+        ////microsoft IoC Container, WebAPI/Startup.cs'de tercih etmiyoruz! Performans sorunu nedeniyle... 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
