@@ -1,6 +1,6 @@
-﻿/*
-create database RentCarDb
+﻿create database RentCarDb
 go
+
 
 CREATE TABLE Colors
 (
@@ -50,46 +50,6 @@ VALUES
 	('4','4','2017','100','Volkswagen','Dizel Araç'),
 	('5','5','2016','50','Renault','Otomatik Vites');
 
-***********************************************************************************************
---LESSON-10
---Users-->Id,FirstName,LastName,Email,Password
---Users-->Id,FirstName,LastName,Email,Password
-
---Rentals-->Id, CarId, CustomerId, RentDate(Kiralama Tarihi), ReturnDate(Teslim Tarihi)
-
-CREATE TABLE Users
-(
-	UserId int primary key identity (1,1),
-	FirstName nvarchar (30),
-	LastName nvarchar (30),
-	Email nvarchar(60),
-	Password char (8),
-	
-)
-go
-
-
---Customers-->UserId,CompanyName
-CREATE TABLE Customers
-(
-	CustomerId int primary key identity (1,1),
-	UserId int foreign key references Users(UserId),
-	CompanyName nvarchar (30),
-	
-)
-go
-
---Rentals-->Id, CarId, CustomerId, RentDate(Kiralama Tarihi), ReturnDate(Teslim Tarihi)
-CREATE TABLE Rentals
-(
-	RentalId int primary key identity (1,1),
-	CarId int foreign key references Cars(CarId),
-	CustomerId int foreign key references Customers(CustomerId),
-	RentDate datetime,
-	ReturnDate datetime,
-	
-)
-go
 
 --Customers-->UserId,CompanyName
 INSERT INTO Customers(CompanyName)
@@ -99,24 +59,25 @@ VALUES
 	('Arçelik'),
 	('Akbank'),
 	('YapıKredi Bankası');
-
-*********************************************************************************
-*/
+	
+--------------------------------------------------------------------------------------------
+	
 
 use RentCarDb
 go
 
---Users-->Id,FirstName,LastName,Email,Password
-
---Rentals-->Id, CarId, CustomerId, RentDate(Kiralama Tarihi), ReturnDate(Teslim Tarihi)
-
+--LESSON-10-Users-->Id,FirstName,LastName,Email,Password
+--Lesson-15-PasswordHash,PasswordSalt 
+--Users
 CREATE TABLE Users
 (
 	UserId int primary key identity (1,1),
-	FirstName nvarchar (30),
-	LastName nvarchar (30),
-	Email nvarchar(60),
-	Password char (8),
+	FirstName varchar (50),
+	LastName varchar (50),
+	Email varchar(60),
+	PasswordHash varbinary (500),
+	PasswordSalt varbinary (500),
+	Status bit,		
 	
 )
 go
@@ -132,6 +93,7 @@ CREATE TABLE Customers
 )
 go
 
+
 --Rentals-->Id, CarId, CustomerId, RentDate(Kiralama Tarihi), ReturnDate(Teslim Tarihi)
 CREATE TABLE Rentals
 (
@@ -143,3 +105,63 @@ CREATE TABLE Rentals
 	
 )
 go
+
+--Lesson-15-PasswordHash,PasswordSalt 
+
+--OperationClaims--> Id, Name
+CREATE TABLE OperationClaims
+(
+	Id int primary key identity (1,1),
+	Name varchar (50),
+	
+)
+go
+
+
+--UserOperationClaims--> Id, UserId, OperationClaimId
+CREATE TABLE UserOperationClaims
+(
+	Id int primary key identity (1,1),
+	UserId int , --int foreign key references Users(UserId),
+	OperationClaimId int ,  --int foreign key references OperationClaims(Id),
+
+)
+go
+	
+-------------------------------------------------------------------------------------------
+use RentCarDb
+go
+--Tablo Column Değişklikleri...
+--Users tablosuna PasswordSalt ve Satus column ları eklemek
+ALTER TABLE Users 
+ADD PasswordSalt varbinary(500),
+	Status bit;
+---------------------------------------------------------
+
+--Tabloda column ismini PasswordHash olarak değiştirmek
+exec sp_rename 'Users.password','PasswordHash';
+----------------------------------------------------------
+--Tabloya foreignkey eklemek
+ALTER TABLE UserOperationClaims
+ADD FOREIGN KEY (UserId) REFERENCES Users(UserId);
+------------------------------------------------------------
+ALTER TABLE UserOperationClaims
+ADD FOREIGN KEY (OperationClaimId) REFERENCES OperationClaims(Id);
+
+--------------------------------------------------------------
+
+--Tabloda column ismini PasswordHash olarak değiştirmek
+exec sp_rename 'Users.UserId','Id';
+
+
+------------------------------------------------------------
+--SQL column veri türü değiştirmek
+
+-----------------------------------------------------
+--SQL column NOT NULL yada NULL kısıtlaması eklemek
+
+-----------------------------------------------------------
+--varolan DB sütun tanımını değiştirmek
+
+--ALTER TABLE Users modify Status datatype NOT NULL;
+--------------------------------------------------------------

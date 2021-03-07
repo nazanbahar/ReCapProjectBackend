@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
@@ -23,7 +24,8 @@ namespace Business.Concrete
         }
 
 
-        [ValidationAspect(typeof(CustomerValidator))]
+        [ValidationAspect(typeof(CustomerValidator))]//s1
+        [SecuredOperation("customer.add, admin")] //s2
         public IResult Add(Customer customer)
         {
             if (customer.CompanyName.Length < 2)

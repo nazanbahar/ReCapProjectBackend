@@ -1,4 +1,5 @@
-﻿using Core.Utilities.Results;
+﻿using Core.Entities.Concrete;
+using Core.Utilities.Results;
 using Entities.Concrete;
 using Entities.DTOs;
 using System;
@@ -15,5 +16,9 @@ namespace Business.Abstract
         IResult Add(User user);
         IResult Update(User user);
         IResult Delete(User user);
+        //security-authorization--> must take place after authentication.  
+        List<OperationClaim> GetClaims(User user);
+        User GetByMail(string email);
+
     }
 }

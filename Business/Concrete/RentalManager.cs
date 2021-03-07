@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
@@ -24,7 +25,8 @@ namespace Business.Concrete
         }
 
 
-        [ValidationAspect(typeof(RentalValidator))]
+        [ValidationAspect(typeof(RentalValidator))] //s1
+        [SecuredOperation("rental.add, admin")] //s2
         public IResult Add(Rental rental)
         {
             //ReturnDate Control

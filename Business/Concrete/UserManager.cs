@@ -1,7 +1,9 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
+using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -22,7 +24,8 @@ namespace Business.Concrete
         }
 
 
-        [ValidationAspect(typeof(UserValidator))]
+        [ValidationAspect(typeof(UserValidator))] //s1
+        [SecuredOperation("user.add, admin")] //s2
         public IResult Add(User user)
         {
             if (user.FirstName.Length < 2)
@@ -51,8 +54,27 @@ namespace Business.Concrete
 
         public IDataResult<User> GetById(int userId)
         {
-            return new SuccessDataResult<User>(_userDal.Get(u => u.UserId == userId));
+            return new SuccessDataResult<User>(_userDal.Get(u => u.Id == userId));
         }
+
+        public User GetByMail(string email)
+        {
+            return _userDal.Get(u => u.Email == email);
+        }
+
+        public List<OperationClaim> GetClaims(User user)
+        {
+            return _userDal.GetClaims(user);
+        }
+
+       
+        [ValidationAspect(typeof(UserValidator))]
+        public IResult Update(User user)
+        {
+            _userDal.Update(user);
+            return new SuccessResult(Messages.UserUpdated);
+        }
+
 
         //public IDataResult<List<UserDetailDto>> GetUserDetails()
         //{
@@ -63,11 +85,5 @@ namespace Business.Concrete
         //    return new SuccessDataResult<List<UserDetailDto>>(_userDal.GetUserDetails());
         //}
 
-        [ValidationAspect(typeof(UserValidator))]
-        public IResult Update(User user)
-        {
-            _userDal.Update(user);
-            return new SuccessResult(Messages.UserUpdated);
-        }
     }
 }
