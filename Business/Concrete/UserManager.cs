@@ -35,7 +35,9 @@ namespace Business.Concrete
 
 
         [ValidationAspect(typeof(UserValidator))] //s1
-        [SecuredOperation("user.add, admin")] //s2
+        //[SecuredOperation("user.add, admin")] //s2 --admin yetkisi add methodunda kaldırıldı! 
+        //UYARI: UserManager.cs'de Add metodunun başına admin yetkisi konulduğunda register olurken yetki isteyecektir onun olmaması daha iyi olur...
+        [SecuredOperation("user.add")] //s2
         public IResult Add(User user)
         {
             if (user.FirstName.Length < 2)
