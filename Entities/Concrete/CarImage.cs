@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Core.Entities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Entities.Concrete
 {
-    public class CarImage
+    public class CarImage:IEntity
     {
         //Id,CarId,ImagePath,Date
-        public int CarImageId { get; set; }
+        public int Id { get; set; }
         public int CarId { get; set; }
         public string ImagePath { get; set; }
         public DateTime? CreateDate { get; set; }

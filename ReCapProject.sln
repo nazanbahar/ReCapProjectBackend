@@ -8,12 +8,15 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{C0E13652-D7E6-4D5A-9D42-27DFB199DDE0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "Business\Business.csproj", "{69E65A95-31BC-4334-8420-6E49104167D2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{36B9113E-0A25-48A2-8908-F83C7A4EEF68} = {36B9113E-0A25-48A2-8908-F83C7A4EEF68}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUI", "ConsoleUI\ConsoleUI.csproj", "{75200B7F-3CC3-4FF0-8720-F5CB5514AED9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{36B9113E-0A25-48A2-8908-F83C7A4EEF68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{59E0B8D5-681E-4AB2-AAF5-B5F167BBFCC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csproj", "{59E0B8D5-681E-4AB2-AAF5-B5F167BBFCC9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

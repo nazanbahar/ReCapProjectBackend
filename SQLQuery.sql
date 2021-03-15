@@ -44,7 +44,7 @@ VALUES
 
 INSERT INTO Cars(BrandId,ColorId,ModelYear,DailyPrice,Carname,Description)
 VALUES
-	('1','1','2020','350','Toyota','Elektirikli Araç'),
+	('1','1','2020','350','Toyota','Elektrikli Araç'),
 	('2','2','2019','250','BMW','Dizel Araç'),
 	('3','3','2018','150','Volvo','Benzinli Araç'),
 	('4','4','2017','100','Volkswagen','Dizel Araç'),
@@ -165,3 +165,6 @@ exec sp_rename 'Users.UserId','Id';
 
 --ALTER TABLE Users modify Status datatype NOT NULL;
 --------------------------------------------------------------
+
+
+

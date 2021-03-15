@@ -50,7 +50,7 @@ namespace WebAPI.Controllers
 
         }
 
- 
+
         //[HttpGet("getcustomerdetails")]
         //public IActionResult GetCustomerDetails()
         //{

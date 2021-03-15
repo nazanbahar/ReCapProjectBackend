@@ -12,11 +12,11 @@ namespace Business.ValidationRules.FluentValidation
         {
             //car
             RuleFor(c => c.CarName).NotEmpty();
-            RuleFor(c => c.CarName).MinimumLength(2);
-            RuleFor(c => c.Description).MinimumLength(200);
+            RuleFor(c => c.CarName).Length(2,50);
+            RuleFor(c => c.Description).MinimumLength(2);
             RuleFor(c => c.DailyPrice).GreaterThan(0);
-            RuleFor(c => c.DailyPrice).GreaterThanOrEqualTo(999).When(c => c.ModelYear == 2021);
-            RuleFor(c => c.CarName).Must(StartWith).WithMessage("Araba isimleri B harfi ile başlamalı");
+            RuleFor(c => c.DailyPrice).GreaterThanOrEqualTo(300).When(c => c.ModelYear == 2021);
+            //RuleFor(c => c.CarName).Must(StartWith).WithMessage("Araba isimleri B harfi ile başlamalı");
 
         }
 

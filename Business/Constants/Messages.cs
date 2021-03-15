@@ -44,7 +44,7 @@ namespace Business.Constants
         public static string UserDeleted = "User kaydı silindi";
         public static string UserUpdated = "User bilgisi güncellendi";
 
-        //Yetkilendirme Mesajı
+        //Yetkilendirme Messages
         public static string AuthorizationDenied = "Yetkiniz Yoktur...";
 
         //Register-Login Messages
@@ -53,6 +53,13 @@ namespace Business.Constants
         public static string UserAlreadyExists = "Kullanıcı Mevcut";
         public static string AccessTokenCreated = "Token Oluşturuldu";
 
-
+        //CarImage Messages
+        public static string ImageNumberLimitExceeded = "Arabanın imaj limiti dolu ve yeni imaj eklenemez.";
+        public static string DeleteSingular="Kayıt silindi...";
+        public static string UpdateSingular="Kayıt güncellendi...";
+        public static string AddSingular="Kayıt eklendi...";
+        public static string NotExist="Mevcut Değil...";
+        public static string InvalidFileExtension="Geçersiz dosya uzantısı";
+        public static string NoSuchCarImageWasFound="Araba görüntüsü bulunamadı...";
     }
 }
