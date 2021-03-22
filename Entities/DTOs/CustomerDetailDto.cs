@@ -5,11 +5,12 @@ using System.Text;
 
 namespace Entities.DTOs
 {
-    public interface CustomerDetailDto:IDto
+    public class CustomerDetailDto:IDto
     {
-        //public string FirstName { get; set; }
-        //public string LastName { get; set; }
-        //public string Email { get; set; }
-        //public string CompanyName { get; set; }
+        public int CustomerId { get; set; }
+        public string FirstName { get; set; }
+        public string Lastname { get; set; }
+        public string Email { get; set; }
+        public string CompanyName { get; set; }
     }
 }

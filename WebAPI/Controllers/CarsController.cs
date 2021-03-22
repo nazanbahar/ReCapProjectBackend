@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
@@ -29,6 +30,8 @@ namespace WebAPI.Controllers
         {
             //Swagger
             //Dependencey chain --
+            //Lesson17: Spinn Time Added
+            Thread.Sleep(50);
             var result = _carService.GetAll();
             if (result.Success)
             {

@@ -22,13 +22,13 @@ CREATE TABLE Brands
 CREATE TABLE Cars
 (
 	Id int primary key identity (1,1) not null,
-	BrandId int foreign key references Brands(Id),
-	ColorId int foreign key references Colors(Id),
+	BrandId int foreign key references Brands(Id) not null,
+	ColorId int foreign key references Colors(Id) not null,
 	CarName nvarchar (50) not null,
 	ModelYear int not null,
 	DailyPrice decimal (30) not null,
 	Description nvarchar(250) not null,
-	IsRented bit,
+	IsRented bit not null,
 )
 go
 
@@ -55,7 +55,7 @@ go
 CREATE TABLE Customers
 (
 	Id int primary key identity (1,1) not null,
-	UserId int foreign key references Users(Id),
+	UserId int foreign key references Users(Id) not null,
 	CompanyName nvarchar (50) not null,
 	
 )
@@ -81,7 +81,7 @@ CREATE TABLE CarImages(
     Id int primary key identity (1,1) not null,
     CarId int foreign key references Cars(Id)not null,
     ImagePath nvarchar(MAX)not null,
-    CreateDate date not null,
+    CreatedAt date not null,
 	
 );
 
@@ -108,6 +108,35 @@ CREATE TABLE UserOperationClaims
 
 )
 go
+
+-----------------------------------------------------------------------------------------------------------------
+use RecapProjectDB
+go
+--------------------------------------
+--Customers Tablosuna foreignkey eklemek
+ALTER TABLE Customers
+ADD FOREIGN KEY (UserId) REFERENCES Users(Id);
+-----------------------------
+----CarImages Tablosuna foreignkey eklemek
+
+ALTER TABLE CarImages
+ADD FOREIGN KEY (CarId) REFERENCES Cars(Id);
+
+-----------------------------
+--Rentals Tablosuna foreignkey eklemek
+
+ALTER TABLE Rentals
+ADD FOREIGN KEY (CarId) REFERENCES Cars(Id);
+
+---------------------------------------
+--UserOperationClaims Tablosuna foreignkey eklemek
+
+ALTER TABLE UserOperationClaims
+ADD FOREIGN KEY (UserId) REFERENCES Users(Id);
+
+------------------------------------------------------------------------------------------------------------------
+--Tabloda column ismini CarImages Tablosunda CreatedAt olarak değiştirmek
+exec sp_rename 'CarImages.CreateDate','CreatedAt';
 
 ------------------------------------------------------------------------------------------------------------------
 INSERT INTO Colors(ColorName)

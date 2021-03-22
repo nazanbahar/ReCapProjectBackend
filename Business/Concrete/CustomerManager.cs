@@ -61,14 +61,18 @@ namespace Business.Concrete
             return new SuccessDataResult<Customer>(_customerDal.Get(cu => cu.Id == customerId));
         }
 
-        //public IDataResult<List<CustomerDetailDto>> GetCustomerDetails()
-        //{
-        //    if (DateTime.Now.Hour == 15)
-        //    {
-        //        return new ErrorDataResult<List<CustomerDetailDto>>(Messages.MaintenanceTime);
-        //    }
-        //    return new SuccessDataResult<List<CustomerDetailDto>>(_customerDal.GetCustomerDetails());
-        //}
+
+        public IDataResult<List<CustomerDetailDto>> GetCustomerDetails()
+        {
+            var results = _customerDal.GetCustomerDetails(); //s2
+            if (DateTime.Now.Hour == 15)
+            {
+                return new ErrorDataResult<List<CustomerDetailDto>>(Messages.MaintenanceTime);
+            }
+            return new SuccessDataResult<List<CustomerDetailDto>>(results);
+        }
+
+
 
         [ValidationAspect(typeof(CustomerValidator))]
         public IResult Update(Customer customer)

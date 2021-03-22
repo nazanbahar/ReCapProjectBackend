@@ -48,6 +48,8 @@ namespace WebAPI
         {
 
             services.AddControllers();
+            //Lesson-17: added-services.AddCors();
+            services.AddCors();
 
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
@@ -76,7 +78,7 @@ namespace WebAPI
 
         }
 
-           
+        
 
         // this method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         //Middleware in ASP NET Core- yaþam döngüsü
@@ -87,7 +89,15 @@ namespace WebAPI
                 app.UseDeveloperExceptionPage();
             }
 
+            //Lesson17:added code2: app.UseCors(builder=>builder.WithOrigins("http://localhost:4200/").AllowAnyHeader().AllowAnyOrigin());
+            app.UseCors(builder=>builder.WithOrigins("http://localhost:4200/").AllowAnyHeader().AllowAnyOrigin());
+
             app.UseHttpsRedirection();
+
+            //Lesson18: Image Gösterme Sorunu için -->  app.UseStaticFiles(); ekle.
+            //The default web app templates call the UseStaticFiles method in Startup.Configure
+            //The parameterless UseStaticFiles method overload marks the files in web root as servable. The following markup references wwwroot/images/MyImage.jpg:
+            app.UseStaticFiles();
 
             app.UseRouting();
 

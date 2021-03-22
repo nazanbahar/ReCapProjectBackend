@@ -42,7 +42,7 @@ namespace Business.Concrete
                 return result;
             }
             img.ImagePath = FileOperationsHelper.Add(image);
-            img.CreateDate = DateTime.Now;
+            img.CreatedAt = DateTime.Now;
             _carImageDal.Add(img);
             return new SuccessResult("Image" + Messages.AddSingular);
 
@@ -117,7 +117,7 @@ namespace Business.Concrete
                 return result;
             }
             var carImg = _carImageDal.Get(m => m.Id == img.Id);
-            carImg.CreateDate = DateTime.Now;
+            carImg.CreatedAt = DateTime.Now;
             carImg.ImagePath = FileOperationsHelper.Add(image);
             FileOperationsHelper.Delete(img.ImagePath);
             _carImageDal.Update(carImg);
@@ -139,7 +139,7 @@ namespace Business.Concrete
 
             foreach (var img in list)
             {
-                Console.WriteLine("{0}- Car ID: {1}\n    Image Path: {2}\n    CratedAt: {3}\n", img.Id, img.CarId, img.ImagePath, img.CreateDate);
+                Console.WriteLine("{0}- Car ID: {1}\n    Image Path: {2}\n    CratedAt: {3}\n", img.Id, img.CarId, img.ImagePath, img.CreatedAt);
             }
             return new SuccessResult();
         }
