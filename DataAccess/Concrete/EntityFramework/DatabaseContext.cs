@@ -7,7 +7,7 @@ using System.Text;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class ReCapProjectContext : DbContext
+    public class DatabaseContext : DbContext
     {
         //Context : Db tabloları ile proje classlarını bağlamak
         //Override, DbContext
@@ -32,4 +32,3 @@ namespace DataAccess.Concrete.EntityFramework
 
     }
 }
-

@@ -25,45 +25,6 @@ namespace WebAPI.Controllers
         }
 
 
-        [HttpGet("getall")]
-        public IActionResult GetAll()
-        {
-            //Swagger
-            //Dependencey chain --
-            var result = _colorService.GetAll();
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-
-
-        [HttpGet("getbyid")]
-        public IActionResult GetById(int colorId)
-        {
-            var result = _colorService.GetById(colorId);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-
-        }
-
-
-        //[HttpGet("getcolordetails")]
-        //public IActionResult GetColorDetails()
-        //{
-        //    var result = _colorService.GetColorDetails();
-        //    if (result.Success)
-        //    {
-        //        return Ok(result);
-        //    }
-        //    return BadRequest(result);
-        //}
-
-
         [HttpPost("add")]
         public IActionResult Add(Color color)
         {
@@ -74,6 +35,8 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
+
 
 
         [HttpPost("update")]
@@ -88,6 +51,8 @@ namespace WebAPI.Controllers
         }
 
 
+
+
         [HttpPost("delete")]
         public IActionResult Delete(Color color)
         {
@@ -98,6 +63,38 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
+
+
+
+        [HttpGet("getall")]
+        public IActionResult GetAll()
+        {
+            //Swagger
+            //Dependencey chain --
+            var result = _colorService.GetAll();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+
+
+
+        [HttpGet("getbyid")]
+        public IActionResult GetById(int colorId)
+        {
+            var result = _colorService.GetById(colorId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+
+        }
+
 
     }
 

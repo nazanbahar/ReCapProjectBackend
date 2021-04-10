@@ -16,12 +16,14 @@ namespace Business.Concrete
     public class CustomerManager : ICustomerService
     {
 
-        ICustomerDal _customerDal;
+        private ICustomerDal _customerDal;
 
         public CustomerManager(ICustomerDal customerDal)
         {
             _customerDal = customerDal;
         }
+
+
 
 
         [ValidationAspect(typeof(CustomerValidator))]//s1
@@ -38,11 +40,24 @@ namespace Business.Concrete
 
 
 
+        [ValidationAspect(typeof(CustomerValidator))]
+        public IResult Update(Customer customer)
+        {
+            _customerDal.Update(customer);
+            return new SuccessResult(Messages.CustomerUpdated);
+        }
+
+
+
+
         public IResult Delete(Customer customer)
         {
             _customerDal.Delete(customer);
             return new SuccessResult(Messages.CustomerDeleted);
         }
+
+
+
 
 
         public IDataResult<List<Customer>> GetAll()
@@ -56,15 +71,21 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), Messages.CustomersListed);
         }
 
+
+
+        
         public IDataResult<Customer> GetById(int customerId)
         {
-            return new SuccessDataResult<Customer>(_customerDal.Get(cu => cu.Id == customerId));
+            return new SuccessDataResult<Customer>(_customerDal.Get(cu => cu.Id == customerId), Messages.CustomersListed);
         }
 
 
-        public IDataResult<List<CustomerDetailDto>> GetCustomerDetails()
+
+
+
+        public IDataResult<List<CustomerDetailDto>> GetAllDetails()
         {
-            var results = _customerDal.GetCustomerDetails(); //s2
+            var results = _customerDal.GetAllDetails(); //s2
             if (DateTime.Now.Hour == 15)
             {
                 return new ErrorDataResult<List<CustomerDetailDto>>(Messages.MaintenanceTime);
@@ -74,11 +95,6 @@ namespace Business.Concrete
 
 
 
-        [ValidationAspect(typeof(CustomerValidator))]
-        public IResult Update(Customer customer)
-        {
-            _customerDal.Update(customer);
-            return new SuccessResult(Messages.CustomerUpdated);
-        }
+  
     }
 }

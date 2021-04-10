@@ -26,7 +26,7 @@ namespace Business.Concrete
 {
     public class UserManager : IUserService
     {
-        IUserDal _userDal;
+        private IUserDal _userDal;
 
         public UserManager(IUserDal userDal)
         {
@@ -48,11 +48,29 @@ namespace Business.Concrete
             return new SuccessResult(Messages.UserAdded);
         }
 
+
+
+
+        [ValidationAspect(typeof(UserValidator))]
+        public IResult Update(User user)
+        {
+            _userDal.Update(user);
+            return new SuccessResult(Messages.UserUpdated);
+        }
+
+
+
+
+
         public IResult Delete(User user)
         {
             _userDal.Delete(user);
             return new SuccessResult(Messages.UserDeleted);
         }
+
+
+
+
 
         [CacheAspect]
         public IDataResult<List<User>> GetAll()
@@ -65,6 +83,10 @@ namespace Business.Concrete
             return new SuccessDataResult<List<User>>(_userDal.GetAll(), Messages.UsersListed);
         }
 
+
+
+
+
         [CacheAspect]
         public IDataResult<User> GetById(int userId)
         {
@@ -76,18 +98,13 @@ namespace Business.Concrete
             return _userDal.Get(u => u.Email == email);
         }
 
+
+
+
+
         public List<OperationClaim> GetClaims(User user)
         {
             return _userDal.GetClaims(user);
         }
-
-       
-        [ValidationAspect(typeof(UserValidator))]
-        public IResult Update(User user)
-        {
-            _userDal.Update(user);
-            return new SuccessResult(Messages.UserUpdated);
-        }
-
     }
 }

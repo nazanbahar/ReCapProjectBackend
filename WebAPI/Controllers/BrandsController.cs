@@ -19,10 +19,58 @@ namespace WebAPI.Controllers
         //IoC Container -- Inversion of Control
         IBrandService _brandService;
 
+
         public BrandsController(IBrandService brandService)
         {
             _brandService = brandService;
         }
+
+
+
+
+        [HttpPost("add")]
+        public IActionResult Add(Brand brand)
+        {
+            var result = _brandService.Add(brand);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+
+
+
+
+        [HttpPost("update")]
+        public IActionResult Update(Brand brand)
+        {
+            var result = _brandService.Update(brand);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+
+
+
+
+        [HttpPost("delete")]
+        public IActionResult Delete(Brand brand)
+        {
+            var result = _brandService.Delete(brand);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+
+
 
         [HttpGet("getall")]
         public IActionResult GetAll()
@@ -38,6 +86,9 @@ namespace WebAPI.Controllers
         }
 
 
+
+
+
         [HttpGet("getbyid")]
         public IActionResult GetById(int brandId)
         {
@@ -50,52 +101,5 @@ namespace WebAPI.Controllers
 
         }
 
-
-        [HttpGet("getbranddetails")]
-        public IActionResult GetBrandDetails()
-        {
-            var result = _brandService.GetBrandDetails();
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-
-
-        [HttpPost("add")]
-        public IActionResult Add(Brand brand)
-        {
-            var result = _brandService.Add(brand);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-
-
-        [HttpPost("update")]
-        public IActionResult Update(Brand brand)
-        {
-            var result = _brandService.Update(brand);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-
-
-        [HttpPost("delete")]
-        public IActionResult Delete(Brand brand)
-        {
-            var result = _brandService.Delete(brand);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
     }
 }

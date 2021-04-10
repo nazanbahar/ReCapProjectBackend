@@ -9,6 +9,7 @@ using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace Business.Concrete
@@ -17,7 +18,7 @@ namespace Business.Concrete
     public class RentalManager : IRentalService
     {
 
-        IRentalDal _rentalDal;
+        private IRentalDal _rentalDal;
 
         public RentalManager(IRentalDal rentalDal)
         {
@@ -43,38 +44,6 @@ namespace Business.Concrete
 
 
 
-        public IResult Delete(Rental rental)
-        {
-            _rentalDal.Delete(rental);
-            return new SuccessResult(Messages.RentalDeleted);
-        }
-
-
-        public IDataResult<List<Rental>> GetAll()
-        {
-            if (DateTime.Now.Hour == 15)
-            {
-                return new ErrorDataResult<List<Rental>>(Messages.MaintenanceTime);
-            }
-            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(), Messages.RentalsListed);
-        }
-
-
-
-        public IDataResult<Rental> GetById(int rentalId)
-        {
-            return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.Id == rentalId));
-        }
-
-        public IDataResult<List<RentalDetailDto>> GetRentalDetails()
-        {
-            if (DateTime.Now.Hour == 15)
-            {
-                return new ErrorDataResult<List<RentalDetailDto>>(Messages.MaintenanceTime);
-            }
-            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetRentalDetails());
-        }
-
 
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Update(Rental rental)
@@ -83,5 +52,51 @@ namespace Business.Concrete
             return new SuccessResult(Messages.RentalUpdated);
 
         }
+
+
+
+
+        public IResult Delete(Rental rental)
+        {
+            _rentalDal.Delete(rental);
+            return new SuccessResult(Messages.RentalDeleted);
+        }
+
+
+
+
+        public IDataResult<List<Rental>> GetAll()
+        {
+            if (DateTime.Now.Hour == 03)
+            {
+                return new ErrorDataResult<List<Rental>>(Messages.MaintenanceTime);
+            }
+            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(), Messages.RentalsListed);
+        }
+
+
+
+
+        public IDataResult<Rental> GetById(int rentalId)
+        {
+            return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.Id == rentalId),Messages.RentalsListed);
+        }
+
+
+
+
+
+        public IDataResult<List<RentalDetailDto>> GetAllDetails(Expression<Func<Rental, bool>> filter = null)
+        {
+            if (DateTime.Now.Hour == 03)
+            {
+                return new ErrorDataResult<List<RentalDetailDto>>(Messages.MaintenanceTime);
+            }
+            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.GetAllDetails(), Messages.RentalsListed);
+        }
+
+
+
+ 
     }
 }

@@ -25,44 +25,6 @@ namespace WebAPI.Controllers
 
 
 
-        [HttpGet("getall")]
-        public IActionResult GetAll()
-        {
-            //Swagger
-            //Dependencey chain --
-            var result = _rentalService.GetAll();
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-
-
-        [HttpGet("getbyid")]
-        public IActionResult GetById(int rental)
-        {
-            var result = _rentalService.GetById(rental);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-
-        }
-
-
-        [HttpGet("getrentaldetails")]
-        public IActionResult GetRentalDetails()
-        {
-            var result = _rentalService.GetRentalDetails();
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
-
 
         [HttpPost("add")]
         public IActionResult Add(Rental rental)
@@ -74,6 +36,8 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
+
 
 
         [HttpPost("update")]
@@ -88,6 +52,7 @@ namespace WebAPI.Controllers
         }
 
 
+
         [HttpPost("delete")]
         public IActionResult Delete(Rental rental)
         {
@@ -98,5 +63,57 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
+
+
+
+        [HttpGet("getall")]
+        public IActionResult GetAll()
+        {
+            //Swagger
+            //Dependencey chain --
+            var result = _rentalService.GetAll();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+
+
+
+
+        [HttpGet("getbyid")]
+        public IActionResult GetById(int rentalId)
+        {
+            var result = _rentalService.GetById(rentalId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+
+        }
+
+
+
+
+        //(x) [HttpGet("getallrentaldetails")]
+        //(x) [HttpGet("getrentaldetails")]
+        [HttpGet("getalldetails")]
+        public IActionResult GetAllDetails()
+        {
+            var result = _rentalService.GetAllDetails();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+
+
+
+ 
     }
 }

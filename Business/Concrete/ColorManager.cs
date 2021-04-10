@@ -16,12 +16,14 @@ namespace Business.Concrete
     public class ColorManager : IColorService
     {
         //veritabanın soyut sınıfına erişeceğiz.
-        IColorDal _colorDal;
+        private IColorDal _colorDal;
 
         public ColorManager(IColorDal colorDal)
         {
             _colorDal = colorDal;
         }
+
+
 
         [ValidationAspect(typeof(ColorValidator))]//s1
         [SecuredOperation("color.add, admin")] //s2
@@ -35,15 +37,33 @@ namespace Business.Concrete
             return new SuccessResult(Messages.ColorAdded);
         }
 
+
+
+
+        [ValidationAspect(typeof(ColorValidator))]
+        public IResult Update(Color color)
+        {
+            _colorDal.Update(color);
+            return new SuccessResult(Messages.ColorUpdated);
+        }
+
+
+
+
+
         public IResult Delete(Color color)
         {
             _colorDal.Delete(color);
             return new SuccessResult(Messages.ColorDeleted);
         }
 
+
+
+
+
         public IDataResult<List<Color>> GetAll()
         {
-            if (DateTime.Now.Hour == 15)
+            if (DateTime.Now.Hour == 03)
             {
                 return new ErrorDataResult<List<Color>>(Messages.MaintenanceTime);
 
@@ -52,25 +72,13 @@ namespace Business.Concrete
         }
 
 
+
+
+
         public IDataResult<Color> GetById(int colorId)
         {
             return new SuccessDataResult<Color>(_colorDal.Get(co => co.Id == colorId));
         }
 
-        //public IDataResult<List<ColorDetailDto>> GetColorDetails()
-        //{
-        //    if (datetime.now.hour == 15)
-        //    {
-        //        return new errordataresult<list<colordetaildto>>(messages.maintenancetime);
-        //    }
-        //    return new successdataresult<list<colordetaildto>>(_colordal.getcolordetails());
-        //}
-
-        [ValidationAspect(typeof(ColorValidator))]
-        public IResult Update(Color color)
-        {
-            _colorDal.Update(color);
-            return new SuccessResult(Messages.ColorUpdated);
-        }
     }
 }

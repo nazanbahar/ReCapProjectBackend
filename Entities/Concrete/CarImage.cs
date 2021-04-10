@@ -2,6 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+/// <summary>
+/// public List<string> ImagePath { get; set; }
+/// </summary>
 
 namespace Entities.Concrete
 {
@@ -14,3 +17,4 @@ namespace Entities.Concrete
         public DateTime? CreatedAt { get; set; }
     }
 }
+

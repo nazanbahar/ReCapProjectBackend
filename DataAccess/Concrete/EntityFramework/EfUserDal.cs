@@ -8,14 +8,16 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 using System.Linq; //manuel ekle. microsoft-bug nedeniyle...
-
+/// <summary>
+/// DB Contex: DatabaseContext olarak değiştirildi...
+/// </summary>
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfUserDal : EfEntityRepositoryBase<User, ReCapProjectContext>, IUserDal
+    public class EfUserDal : EfEntityRepositoryBase<User, DatabaseContext>, IUserDal
     {
         public List<OperationClaim> GetClaims(User user)
         {
-            using (var context = new ReCapProjectContext())
+            using (var context = new DatabaseContext())
             {
                 var result = from operationClaim in context.OperationClaims
                              join userOperationClaim in context.UserOperationClaims

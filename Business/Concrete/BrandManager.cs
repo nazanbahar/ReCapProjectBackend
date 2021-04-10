@@ -18,7 +18,7 @@ namespace Business.Concrete
     {
 
         //veritabanın soyut sınıfına erişeceğiz.
-        IBrandDal _brandDal;
+        private IBrandDal _brandDal;
 
         public BrandManager(IBrandDal brandDal)
         {
@@ -37,31 +37,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.BrandAdded);
         }
 
-        public IResult Delete(Brand brand)
-        {
-            _brandDal.Delete(brand);
-            return new SuccessResult(Messages.BrandDeleted);
-        }
 
-        public IDataResult<List<Brand>> GetAll()
-        {
-            if (DateTime.Now.Hour == 15)
-            {
-                return new ErrorDataResult<List<Brand>>(Messages.MaintenanceTime);
-
-            }
-            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(), Messages.BrandsListed);
-        }
-
-        public IDataResult<List<BrandDetailDto>> GetBrandDetails()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IDataResult<Brand> GetById(int brandId)
-        {
-            return new SuccessDataResult<Brand>(_brandDal.Get(br => br.Id == brandId));
-        }
 
         [ValidationAspect(typeof(BrandValidator))]
         public IResult Update(Brand brand)
@@ -69,5 +45,38 @@ namespace Business.Concrete
             _brandDal.Update(brand);
             return new SuccessResult(Messages.BrandUpdated);
         }
+
+
+
+        public IResult Delete(Brand brand)
+        {
+            _brandDal.Delete(brand);
+            return new SuccessResult(Messages.BrandDeleted);
+        }
+
+
+
+
+
+        public IDataResult<List<Brand>> GetAll()
+        {
+            if (DateTime.Now.Hour == 03)
+            {
+                return new ErrorDataResult<List<Brand>>(Messages.MaintenanceTime);
+
+            }
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(), Messages.BrandsListed);
+        }
+
+ 
+        
+
+
+        public IDataResult<Brand> GetById(int brandId)
+        {
+            return new SuccessDataResult<Brand>(_brandDal.Get(br => br.Id == brandId));
+        }
+
+ 
     }
 }
