@@ -17,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,6 +77,13 @@ namespace WebAPI
 
             });
 
+            //====================================================================
+            //EXTRA: SWAGGER TOOL has been Integrated - Step1:Using Swagger Tool Service injection - (swagger Tools Pluging for Project - NuGet Manager Installed: Swashbuckle.AspNetCore)
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            });
+            //====================================================================
         }
 
         
@@ -111,6 +119,16 @@ namespace WebAPI
             {
                 endpoints.MapControllers();
             });
+
+
+            //====================================================================
+            //EXTRA: SWAGGER TOOL has been Integrated -  Step2:Using Swagger Tool Service injection 
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger");
+            });
+            //====================================================================
         }
     }
 }
